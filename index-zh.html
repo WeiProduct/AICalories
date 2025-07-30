@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI卡路里 - 智能食物识别与卡路里追踪</title>
+    <meta name="description" content="AI卡路里使用先进的AI技术识别食物并追踪您的每日卡路里摄入。现已在App Store上线。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #007AFF;
+        }
+        
+        .language-switch {
+            padding: 0.5rem 1rem;
+            background: #f5f5f7;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .language-switch:hover {
+            background: #e8e8ed;
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 2rem;
+            background: #007AFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            background: #ffffff;
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            padding: 2rem;
+            background: #f5f5f7;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* Screenshots Section */
+        .screenshots {
+            padding: 4rem 2rem;
+            background: #f5f5f7;
+        }
+        
+        .screenshots-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .screenshots h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+        
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .screenshot {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.05);
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .footer-section a {
+            color: #999;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="images/app-icon.png" alt="AI卡路里 Logo">
+                AI卡路里
+            </a>
+            <div class="nav-links">
+                <a href="#features">功能特点</a>
+                <a href="#screenshots">应用截图</a>
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+                <a href="index.html" class="language-switch">English</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI智能卡路里追踪</h1>
+            <p>拍照即可获取营养成分。您口袋里的私人AI营养师。</p>
+            <a href="#" class="download-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.8 18.9C8.2 18.9 7.7 18.7 7.3 18.3C6.9 17.9 6.7 17.4 6.7 16.8V12.4C6.7 12.2 6.7 12 6.8 11.8C6.9 11.6 7.1 11.5 7.3 11.5C7.5 11.5 7.7 11.6 7.8 11.8C7.9 12 7.9 12.2 7.9 12.4V16.8C7.9 17.1 8 17.3 8.2 17.5C8.4 17.7 8.6 17.8 8.9 17.8H15.1C15.4 17.8 15.6 17.7 15.8 17.5C16 17.3 16.1 17.1 16.1 16.8V12.4C16.1 12.2 16.2 12 16.3 11.8C16.4 11.6 16.6 11.5 16.8 11.5C17 11.5 17.2 11.6 17.3 11.8C17.4 12 17.5 12.2 17.5 12.4V16.8C17.5 17.4 17.3 17.9 16.9 18.3C16.5 18.7 16 18.9 15.4 18.9H8.8Z" fill="white"/>
+                    <path d="M12 15.2C11.8 15.2 11.6 15.1 11.5 15L8.1 11.6C7.9 11.4 7.9 11.1 8.1 10.9C8.3 10.7 8.6 10.7 8.8 10.9L11.4 13.5V5.8C11.4 5.4 11.7 5.1 12.1 5.1C12.5 5.1 12.8 5.4 12.8 5.8V13.5L15.4 10.9C15.6 10.7 15.9 10.7 16.1 10.9C16.3 11.1 16.3 11.4 16.1 11.6L12.7 15C12.5 15.1 12.3 15.2 12 15.2Z" fill="white"/>
+                </svg>
+                在 App Store 下载
+            </a>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2>强大功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>AI食物识别</h3>
+                    <p>只需拍摄您的餐食照片，我们的AI即可立即识别食物并计算营养信息。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>详细追踪</h3>
+                    <p>追踪卡路里、蛋白质、碳水化合物和脂肪。监控您的每日、每周和每月营养趋势。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>个人目标</h3>
+                    <p>设定并追踪您的个人健康目标。获得根据您的饮食需求量身定制的建议。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💧</div>
+                    <h3>饮水追踪</h3>
+                    <p>通过我们的饮水量追踪器保持水分充足。全天获得饮水提醒。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>离线模式</h3>
+                    <p>即使没有网络连接也能追踪您的餐食。重新联网后所有数据自动同步。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>多语言支持</h3>
+                    <p>支持中文和英文。更多语言即将推出，服务全球用户。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots" id="screenshots">
+        <div class="screenshots-container">
+            <h2>实际效果展示</h2>
+            <div class="screenshots-grid">
+                <div class="screenshot">
+                    <img src="images/screenshot-1.png" alt="AI食物识别">
+                </div>
+                <div class="screenshot">
+                    <img src="images/screenshot-2.png" alt="每日总结">
+                </div>
+                <div class="screenshot">
+                    <img src="images/screenshot-3.png" alt="用餐历史">
+                </div>
+                <div class="screenshot">
+                    <img src="images/screenshot-4.png" alt="个人目标">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>产品</h4>
+                <a href="#features">功能特点</a>
+                <a href="#screenshots">应用截图</a>
+                <a href="#">下载</a>
+            </div>
+            <div class="footer-section">
+                <h4>支持</h4>
+                <a href="#">常见问题</a>
+                <a href="#">联系我们</a>
+                <a href="#">用户指南</a>
+            </div>
+            <div class="footer-section">
+                <h4>法律</h4>
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+            </div>
+            <div class="footer-section">
+                <h4>联系方式</h4>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">邮箱</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AI卡路里。保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+</html>
